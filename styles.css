@@ -1,0 +1,258 @@
+body {
+    margin: 28px 0;
+    padding-top: 60px;
+    display: flex;
+    align-items: flex-start;
+    align-content: space-between;
+    justify-content: center;
+    flex-direction: row;
+    background: #fafafa;
+}
+
+/* 
+ *
+ * Navbar Styling
+ *
+ */
+
+.nav {
+    width: 100%;
+    height: 60px;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-bottom: 1px solid rgb(219, 219, 219);
+    color: rgb(38, 38, 38);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.nav-wrapper {
+    width: 935px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: row;
+}
+
+.nav-right p {
+    margin: 0 10px 0 0;
+    padding: 0;
+    font-size: 12px;
+    color: rgb(38, 38, 38);
+    line-height: 16px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.nav-right a {
+    margin: 0 0 0 10px;
+    padding: 0;
+    font-size: 12px;
+    color: rgb(0, 149, 246);
+    font-weight: 600;
+    line-height: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+}
+
+.nav-right a:hover {
+    text-decoration: underline;
+}
+
+.nav-left {
+    display: flex;
+    align-items: flex-end;
+}
+
+.nav-left img {
+    height: 30px;
+    width: auto;
+}
+
+/* 
+ *
+ * Content Styling
+ *
+ */
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 614px;
+    margin-right: 28px;
+}
+
+/* 
+ *
+ * Stories Styling
+ *
+ */
+
+.stories-panel {
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: row;
+    width: 612px;
+}
+
+.story {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 80px;
+    margin: 16px 4px 16px 4px;
+}
+
+.story img {
+    height: 62px;
+    width: auto;
+    border-radius: 31px;
+    border-radius: 62px;
+    box-sizing: border-box;
+    border: 2px solid white;
+}
+
+.story .story-wrapper {
+    background: -webkit-linear-gradient(left bottom, #FCAF45 0%, #E1306C 100%);
+    width: 66px;
+    height: 66px;
+    border-radius: 33px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.story p {
+    color: rgb(38, 38, 38);
+    line-height: 16px;
+    font-size: 12px;
+    padding: 0;
+    margin: 4px 0 0 0;
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 66px;
+    overflow: hidden
+}
+
+/* 
+ *
+ * Sidepanel Styling
+ *
+ */
+
+.sidepanel {
+    width: 293px;
+    margin-top: 18px;
+}
+
+.sidepanel .header {
+    display: flex;
+    align-items: center;
+    align-content: space-between;
+    flex-direction: row;
+}
+
+.sidepanel .header img {
+    width: 56px;
+    height: auto;
+    border-radius: 28px;
+    margin: 10px 6px 10px 0;
+}
+
+.sidepanel .header p:first-child {
+    margin: 0 0 0 12px;
+    font-size: 14px;
+    color: rgb(38, 38, 38);
+    line-height: 18px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.sidepanel .header p:last-child {
+    margin: 0 0 0 12px;
+    padding: 0;
+    font-size: 14px;
+    color: rgb(142, 142, 142);
+    line-height: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.sidepanel .header .user {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.sidepanel .recommendations h3 {
+    font-size: 14px;
+    color: rgb(142, 142, 142);
+    line-height: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 4px 0 0 0;
+    padding: 8px 0 8px 0;
+}
+
+.sidepanel .recommendations .suggestion {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px;
+}
+
+.sidepanel .recommendations .suggestion img {
+    width: 32px;
+    height: auto;
+    border-radius: 16px;
+    margin: 5px 5px 5px 0;
+}
+
+.sidepanel .recommendations .suggestion p:first-child {
+    margin: 0 0 0 8px;
+    font-size: 14px;
+    color: rgb(38, 38, 38);
+    line-height: 18px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.sidepanel .recommendations .suggestion p:first-child:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.sidepanel .recommendations .suggestion p:last-child {
+    margin: 0 0 0 8px;
+    padding: 0;
+    font-size: 12px;
+    color: rgb(142, 142, 142);
+    line-height: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.sidepanel .recommendations .suggestion a {
+    font-size: 12px;
+    color: rgb(0, 149, 246);
+    font-weight: 600;
+    line-height: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    margin-left: auto;
+}
