@@ -108,6 +108,7 @@ body {
     display: flex;
     flex-direction: row;
     width: 612px;
+    margin-bottom: 24px;
 }
 
 .story {
@@ -153,6 +154,164 @@ body {
 
 /* 
  *
+ * Card Styling
+ *
+ */
+
+ .card {
+    background: white;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    width: 612px;
+    margin-bottom: 24px;
+}
+
+.card .card-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    padding: 0 16px 0 16px;
+}
+
+.card .card-header p {
+    font-size: 14px;
+    color: rgb(38, 38, 38);
+    line-height: 18px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+.card .card-img img {
+    width: 612px;
+    height: auto;
+}
+
+.card .card-body .card-interactions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 8px 8px 8px;
+}
+
+.card .card-body .card-interactions i {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.card .card-body .card-likes p {
+    font-size: 14px;
+    color: rgb(38, 38, 38);
+    line-height: 18px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0 16px 8px 16px;
+    margin: 0;
+    width: 100%;
+}
+
+.card .card-body .card-comments {
+    padding: 0 16px 0 16px;
+}
+
+.card .card-body .card-comments .card-comment {
+    font-size: 14px;
+    color: rgb(38, 38, 38);
+    line-height: 18px;
+    font-weight: 400;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0 0 4px 0;
+
+}
+
+.card .card-body .card-comments .card-comment #poster {
+    font-size: 14px;
+    color: rgb(38, 38, 38);
+    line-height: 18px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-right: 4px;
+}
+
+.card .card-body .card-comments .card-comment .card-comment-more {
+    font-size: 14px;
+    color: rgb(0, 55, 107);
+    line-height: 18px;
+    font-weight: 400;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 4px;
+    text-decoration: none;
+}
+
+.card .card-body .card-comments .card-time {
+    font-size: 10px;
+    letter-spacing: 0.2px;
+    color: rgb(142, 142, 142);
+    line-height: 12px;
+    font-weight: 400;
+    font-family: Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+    margin: 0 0 16px 0;
+}
+
+.card .card-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 8px 6px 8px;
+    border-top: 1px solid #dbdbdb;
+}
+
+.card .card-footer .card-input {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: stretch;
+    margin-right: auto;
+    width: 100%;
+}
+
+.card .card-footer .card-input i {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 24px;
+    padding-right: 8px;
+}
+
+.card .card-footer .card-input input {
+    border: 0;
+    height: 18px;
+    width: 100%;
+    display: inline-block;
+}
+
+.card .card-footer .card-input input:focus {
+    outline: 0;
+}
+
+.card .card-footer a {
+    color: #0095f6;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    opacity: 0.3;
+    margin: 0 8px 0 16px;
+}
+
+/* 
+ *
  * Sidepanel Styling
  *
  */
@@ -160,6 +319,8 @@ body {
 .sidepanel {
     width: 293px;
     margin-top: 18px;
+    position: sticky;
+    top: 107px;
 }
 
 .sidepanel .header {
