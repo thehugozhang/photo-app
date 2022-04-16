@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Photo App - CS396</title>
-
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/280a392f45.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./styles.css">
 </head>
@@ -14,8 +16,8 @@
     <div class = "nav">
         <div class = "nav-wrapper">
             <div class = "nav-left">
-                <!-- <p>Photo App</p> -->
-                <img src = "img/logo.png">
+                <h2>Photo App</h2>
+                <!-- <img src = "img/logo.png"> -->
             </div>
             <div class = "nav-right">
                 <p id = "username">hugoyzhang</p>
@@ -171,6 +173,42 @@
                     <a href = "#">Post</a>
                 </div>
             </div>
+
+            <div class = "card">
+                <div class = "card-header">
+                    <p>northwesternu</p>
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+                <div class = "card-img">
+                    <img src="https://picsum.photos/1200?random=4">
+                </div>
+                <div class = "card-body">
+                    <div class = "card-interactions">
+                        <div class = "card-triple-icons">
+                            <i class="fa-regular fa-heart"></i>
+                            <i class="fa-regular fa-comment"></i>
+                            <i class="fa-regular fa-paper-plane"></i>
+                        </div>
+                        <i class="fa-regular fa-bookmark"></i>
+                    </div>
+                    <div class = "card-likes">
+                        <p id = "#likes">853 likes</p>
+                    </div>
+                    <div class = "card-comments">
+                        <p class = "card-comment"><span id = "poster">northwesternu</span>Hugo Zhang is our favorite transfer! Learn more about him on his website.<span><a href = "#" class = "card-comment-more">View More</a></span></p>
+                        <p class = "card-comment"><span id = "poster">pittofficial</span>We lost a good one, take good care of him!</p>
+                        <p class = "card-comment"><span id = "poster">hugoyzhang</span>Hey, that's me!</p>
+                        <p class = "card-time">2 Days Ago</p>
+                    </div>
+                </div>
+                <div class = "card-footer">
+                    <div class = "card-input">
+                        <i class="fa-regular fa-face-smile"></i>
+                        <input type="text" placeholder="Add a comment...">
+                    </div>
+                    <a href = "#">Post</a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -183,7 +221,7 @@
             </div>
         </div>
         <div class = "recommendations">
-            <h3>Suggestions For You</h3>
+            <p id = "h3sub">Suggestions For You</p>
 
             <div class = "suggestion">
                 <img src="img/prof2.jpeg">
@@ -232,4 +270,20 @@
         </div>
     </div>
 </body>
+
+<!-- 
+
+    Adding a feature for users to easily add alt-text to their image.
+
+    Since alt-text should only be displayed when the image fails to load,
+    I would add a feature that asks users specifically for the alt-text
+    they'd like to use to describe the image they are uploading. This
+    feature would look similar to a text input that would save their
+    reponse in a backend database value. Then, through either JavaScript
+    or in my code somewhere, I would dynamically assign the alt attribute
+    of the image tag <img> corresponding to their uploaded photo to their
+    submitted alt-text value.
+
+ -->
+
 </html>

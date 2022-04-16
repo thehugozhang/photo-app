@@ -85,6 +85,13 @@ body {
     width: auto;
 }
 
+.nav-left h2 {
+    font-family: 'Comfortaa', cursive;
+    font-weight: 700;
+    color: rgb(38, 38, 38);
+    margin: 0;
+}
+
 /* 
  *
  * Content Styling
@@ -365,8 +372,9 @@ body {
     align-items: flex-start;
 }
 
-.sidepanel .recommendations h3 {
+.sidepanel .recommendations #h3sub {
     font-size: 14px;
+    font-weight: 700;
     color: rgb(142, 142, 142);
     line-height: 18px;
     font-family: Arial, Helvetica, sans-serif;
