@@ -1,0 +1,49 @@
+<div class = "cards">
+
+    {% for post in posts %}
+
+    <div class = "card">
+        <div class = "card-header">
+            <p>{{ post.user.get('username') }}</p>
+            <i class="fa-solid fa-ellipsis"></i>
+        </div>
+        <div class = "card-img">
+            <img src="{{ post.get('image_url') }}" alt="Post image for {{ post.user.get('username') }}">
+        </div>
+        <div class = "card-body">
+            <div class = "card-interactions">
+                <div class = "card-triple-icons">
+                    <i class="fa-regular fa-heart" aria-label="likePost"></i>
+                    <i class="fa-regular fa-comment" aria-label="commentPost"></i>
+                    <i class="fa-regular fa-paper-plane" aria-label="sharePost"></i>
+                </div>
+                <i class="fa-regular fa-bookmark"></i>
+            </div>
+            <div class = "card-likes">
+                <p id = "#likes">{{ post.get('likes') }} likes</p>
+            </div>
+            <div class = "card-comments">
+                <p class = "card-comment"><span id = "poster">{{ post.user.get('username') }}</span>{{post.get('title')}}<span><a href = "#" class = "card-comment-more">more</a></span></p>
+                {% if post.comments|length > 0 %}
+                    {% if post.comments|length == 1 %}
+                        <p class = "card-comment"><span id = "poster">{{ post.comments[0].user.get('username') }}</span>{{ post.comments[0].text }}</p>
+                    {% else %}
+                        <p class = "card-comment"><a href = "#" class = "card-comment-more">View all {{ post.comments|length }} comments</a></p>
+                        <p class = "card-comment"><span id = "poster">{{ post.comments[0].user.get('username') }}</span>{{ post.comments[0].text }}</p>
+                    {% endif %}
+                {% endif %}
+                <p class = "card-time">{{ post.get('display_time') }}</p>
+            </div>
+        </div>
+        <div class = "card-footer">
+            <div class = "card-input">
+                <i class="fa-regular fa-face-smile"></i>
+                <input type="text" placeholder="Add a comment..." aria-label="commentInput">
+            </div>
+            <a href = "#">Post</a>
+        </div>
+    </div>
+
+    {% endfor %}
+
+</div>
