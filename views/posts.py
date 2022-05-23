@@ -34,7 +34,7 @@ class PostListEndpoint(Resource):
             # too big
             return Response(json.dumps({"message": "the limit parameter is invalid"}), mimetype="application/json", status=400)
         posts = Post.query.filter(Post.user_id.in_(user_ids)).limit(limit).all()
-        posts_json = [post.to_dict() for post in posts]
+        posts_json = [post.to_dict(user=self.current_user) for post in posts]
         return Response(json.dumps(posts_json), mimetype="application/json", status=200)
 
     def post(self):
@@ -113,7 +113,7 @@ class PostDetailEndpoint(Resource):
         user_ids = get_authorized_user_ids(self.current_user)
         if post.user_id not in user_ids:
             return Response(json.dumps({"message": "id={0} is invalid".format(id)}), mimetype="application/json", status=404)
-        return Response(json.dumps(post.to_dict()), mimetype="application/json", status=200)
+        return Response(json.dumps(post.to_dict(user=self.current_user)), mimetype="application/json", status=200)
 
 def initialize_routes(api):
     api.add_resource(

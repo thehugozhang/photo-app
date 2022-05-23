@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Photo App - CS396</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/280a392f45.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../static/css/styles.css">
+
+    <!-- client-side scripts -->
+    <script lang="text/javascript" src="/static/js/hw04.js" defer></script>
+</head>
+<body>
+
+    {% include 'includes/navbar.html' %}
+
+    <div class = "content">
+
+        {% include 'includes/stories.html' %}
+
+        {% include 'includes/cards.html' %}
+
+    </div>
+
+    {% include 'includes/suggestions.html' %}
+
+</body>
+
+<!-- 
+
+    Adding a feature for users to easily add alt-text to their image.
+
+    Since alt-text should only be displayed when the image fails to load,
+    I would add a feature that asks users specifically for the alt-text
+    they'd like to use to describe the image they are uploading. This
+    feature would look similar to a text input that would save their
+    reponse in a backend database value. Then, through either JavaScript
+    or in my code somewhere, I would dynamically assign the alt attribute
+    of the image tag <img> corresponding to their uploaded photo to their
+    submitted alt-text value.
+
+ -->
+
+</html>
