@@ -85,7 +85,7 @@ const post2Html = post => {
             `
         } else {
             commentHtml = `
-                <p class = "card-comment"><a href = "#" class = "card-comment-more" id = "${"commentcount" + post.id}">View all ${ post.comments.length } comments</a></p>
+                <p class = "card-comment"><a href = "#" class = "card-comment-more open" onclick="openModal(this);" id = "${"commentcount" + post.id}">View all ${ post.comments.length } comments</a></p>
                 <p class = "card-comment" id = "${"firstcomment" + post.id}"><span id = "poster">${ post.comments[0].user.username }</span>${ post.comments[0].text }</p>
             `
         }
@@ -306,7 +306,7 @@ function postComment(element) {
                 } else {
                     if (document.getElementById("firstcomment" + data.post_id)) {
                         // 1 comment so add update first comment and add "View all X comments" label
-                        var newcommentcount = `<p class = "card-comment"><a href = "#" class = "card-comment-more" id = "${"commentcount" + data.post_id}">View all 2 comments</a></p>`
+                        var newcommentcount = `<p class = "card-comment"><a href = "#" class = "card-comment-more open" onclick="openModal(this);" id = "${"commentcount" + data.post_id}">View all 2 comments</a></p>`
                         document.getElementById("firstcomment" + data.post_id).innerHTML = `<span id = "poster">${data.user.username}</span>${ data.text }`
                         document.getElementById("commentmarker" + data.post_id).insertAdjacentHTML('afterend', newcommentcount)
                     } else {
@@ -324,6 +324,95 @@ function postComment(element) {
         document.getElementById("commentbox" + pid).focus();
     }
 }
+
 // 
 // END Event Handlers
+// BEGIN Modal Implementation
+const modalElement = document.querySelector('.modal-bg');
+
+function modalcomment2Html(comment) {
+    return `
+        <div class = "modal-comment">
+            <div class = "modal-comment-align">
+                <img src="${comment.user.thumb_url}" alt="comment profile pic">
+                <div class = "modal-caption-box">
+                    <p class = "modal-caption" id = "modal-caption"><span id = "poster">${comment.user.username}</span>${comment.text}</p>
+                    <p class = "modal-time">${comment.display_time}</p>
+                </div> 
+            </div>
+            <i tabindex = "0" class="fa-regular fa-heart" aria-label="likeComment"></i>
+        </div>
+    `
+}
+function openModal(element) {
+    var pid = parseInt(element.id.slice(12))
+    console.log('open!', pid);
+    fetch("/api/posts/" + pid, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        document.getElementById("modal-img").src = data.image_url
+        document.getElementById("modalheader").innerHTML = data.user.username
+        document.getElementById("modalheader-prof").src = data.user.thumb_url
+        const modalcomments = data.comments.map(modalcomment2Html).join('');
+        document.querySelector(".modal-comments-body").insertAdjacentHTML('beforeend', `
+            <div class = "modal-comment" style = "margin-top: 88px">
+                <div class = "modal-comment-align">
+                    <img src="${data.user.thumb_url}" alt="comment profile pic">
+                    <div class = "modal-caption-box">
+                        <p class = "modal-caption" id = "modal-caption"><span id = "poster">${data.user.username}</span>${data.caption}</p>
+                        <p class = "modal-time">${data.display_time}</p>
+                    </div> 
+                </div>
+                <i tabindex = "0" class="fa-regular fa-heart" aria-label="likeComment"></i>
+            </div>
+        `)
+        document.querySelector(".modal-comments-body").insertAdjacentHTML('beforeend', modalcomments)
+        modalElement.classList.remove('hidden');
+        modalElement.setAttribute('aria-hidden', 'false');
+        document.querySelector('.close').focus();
+    });
+    
+}
+
+const closeModal = ev => {
+    console.log('close!');
+    modalElement.classList.add('hidden');
+    modalElement.setAttribute('aria-hidden', 'false');
+    document.querySelector('.open').focus();
+};
+
+
+function keyPress (e) {
+    if(e.key === "Escape") {
+        
+    }
+}
+
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    var isEscape = false;
+    if ("key" in evt) {
+        isEscape = (evt.key === "Escape" || evt.key === "Esc");
+    } else {
+        isEscape = (evt.keyCode === 27);
+    }
+    if (isEscape) {
+        console.log("test")
+        if (modalElement.getAttribute('aria-hidden') == 'false') {
+            console.log('close!');
+            modalElement.classList.add('hidden');
+            modalElement.setAttribute('aria-hidden', 'false');
+            document.querySelector('.open').focus();
+        }
+    }
+};
+
+//
+// END Modal Implementation
 //

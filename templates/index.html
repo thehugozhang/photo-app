@@ -29,6 +29,30 @@
 
     {% include 'includes/suggestions.html' %}
 
+    <div class="modal-bg hidden" aria-hidden="true" role="dialog">
+        <section class="modal">
+            <button class="close" aria-label="Close the modal window" onclick="closeModal(event);"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-body">
+                <div class="row">
+                    <div class = "modal-left-container">
+                        <div class = "modal-img">
+                            <img id = "modal-img" src="https://picsum.photos/600/430?id=383" alt="Post image for ${ post.user.username }">
+                        </div>
+                    </div>
+                    <div class = "modal-right-container">
+                        <div class = "modal-header">
+                            <img id = "modalheader-prof" src="https://picsum.photos/30/30?id=3" alt="comment profile pic">
+                            <p id = "modalheader">First Last</p>
+                        </div>
+                        <div class = "modal-comments-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
 </body>
 
 <!-- 
