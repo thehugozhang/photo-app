@@ -41,7 +41,7 @@ const suggestion2Html = suggestion => {
                 <p>${ suggestion.username }</p>
                 <p>Suggested for you</p>
             </div>
-            <a href = "#">Follow</a>
+            <a href="" onclick="followUnfollow(this); return false;" data-user-id="${suggestion.id}">Follow</a>
         </div>
     `
 }
@@ -69,24 +69,24 @@ const post2Html = post => {
     var likeHtml = ``
     var bookmarkHtml = ``
     if (post.current_user_like_id) {
-        likeHtml = `<i class="fa-solid fa-heart" aria-label="likePost" style = "color: #ed4956;" onclick="likeUnlike(this);" data-post-id="${post.id}" data-like-id="${post.current_user_like_id}"></i>`
+        likeHtml = `<i tabindex = "0" class="fa-solid fa-heart" aria-label="likePost" style = "color: #ed4956;" onclick="likeUnlike(this);" data-post-id="${post.id}" data-like-id="${post.current_user_like_id}"></i>`
     } else {
-        likeHtml = `<i class="fa-regular fa-heart" aria-label="likePost" onclick="likeUnlike(this);" data-post-id="${post.id}"></i>`
+        likeHtml = `<i tabindex = "0" class="fa-regular fa-heart" aria-label="likePost" onclick="likeUnlike(this);" data-post-id="${post.id}"></i>`
     }
     if (post.current_user_bookmark_id) {
-        bookmarkHtml = `<i class="fa-solid fa-bookmark"></i>`
+        bookmarkHtml = `<i tabindex = "0" class="fa-solid fa-bookmark" onclick="bookmarkUnbookmark(this);" data-post-id="${post.id}" data-like-id="${post.current_user_bookmark_id}"></i>`
     } else {
-        bookmarkHtml = `<i class="fa-regular fa-bookmark"></i>`
+        bookmarkHtml = `<i tabindex = "0" class="fa-regular fa-bookmark" onclick="bookmarkUnbookmark(this);" data-post-id="${post.id}"></i>`
     }
     if (post.comments.length > 0) {
         if (post.comments.length == 1) {
             commentHtml = `
-                <p class = "card-comment"><span id = "poster">${ post.comments[0].user.username }</span>${ post.comments[0].text }</p>
+                <p class = "card-comment" id = "${"firstcomment" + post.id}"><span id = "poster">${ post.comments[0].user.username }</span>${ post.comments[0].text }</p>
             `
         } else {
             commentHtml = `
-                <p class = "card-comment"><a href = "#" class = "card-comment-more">View all ${ post.comments.length } comments</a></p>
-                <p class = "card-comment"><span id = "poster">${ post.comments[0].user.username }</span>${ post.comments[0].text }</p>
+                <p class = "card-comment"><a href = "#" class = "card-comment-more" id = "${"commentcount" + post.id}">View all ${ post.comments.length } comments</a></p>
+                <p class = "card-comment" id = "${"firstcomment" + post.id}"><span id = "poster">${ post.comments[0].user.username }</span>${ post.comments[0].text }</p>
             `
         }
     }
@@ -112,7 +112,7 @@ const post2Html = post => {
                     <p id = "${"likes" + post.id}">${ post.likes.length } likes</p>
                 </div>
                 <div class = "card-comments">
-                    <p class = "card-comment"><span id = "poster">${ post.user.username }</span>${ post.caption }<span><a href = "#" class = "card-comment-more">more</a></span></p>
+                    <p class = "card-comment" id = "${"commentmarker" + post.id}"><span id = "poster">${ post.user.username }</span>${ post.caption }<span><a href = "#" class = "card-comment-more">more</a></span></p>
                     ` +
                     commentHtml
                     + `
@@ -122,9 +122,9 @@ const post2Html = post => {
             <div class = "card-footer">
                 <div class = "card-input">
                     <i class="fa-regular fa-face-smile"></i>
-                    <input type="text" placeholder="Add a comment..." aria-label="commentInput">
+                    <input type="text" placeholder="Add a comment..." aria-label="commentInput" id = "${"commentbox" + post.id}">
                 </div>
-                <a href = "#">Post</a>
+                <a href = "" onclick = "postComment(this); return false;" data-commentbox-id = "${post.id}">Post</a>
             </div>
         </div>
     `
@@ -194,6 +194,134 @@ function likeUnlike(element) {
             element.style.color = "#ed4956"
             element.setAttribute("data-like-id", data.id)
         });
+    }
+}
+
+function bookmarkUnbookmark(element) {
+    var pid = parseInt(element.getAttribute("data-post-id"))
+    if (element.getAttribute("data-bookmark-id")) {
+        // bookmark to unbookmark
+        var cid = parseInt(element.getAttribute("data-bookmark-id"))
+        fetch("/api/bookmarks/" + cid, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            element.classList.remove("fa-solid")
+            element.classList.add("fa-regular")
+            element.removeAttribute('data-bookmark-id')
+        }); 
+
+    } else {
+        // unbookmark to bookmark
+        const postData = {
+            "post_id": pid
+        };
+        
+        fetch("/api/bookmarks", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            element.classList.add("fa-solid")
+            element.classList.remove("fa-regular")
+            element.setAttribute("data-bookmark-id", data.id)
+        });
+    }
+}
+
+function followUnfollow(element) {
+    var uid = parseInt(element.getAttribute("data-user-id"))
+    if (element.getAttribute("data-follow-id")) {
+        // follow to unfollow
+        var fid = parseInt(element.getAttribute("data-follow-id"))
+        fetch("http://localhost:5000/api/following/" + fid, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            element.innerHTML = "Follow"
+            element.removeAttribute('data-follow-id')
+        });
+
+
+    } else {
+        // unfollow to follow
+        const postData = {
+            "user_id": uid
+        };
+        
+        fetch("/api/following", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(postData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                element.innerHTML = "Unfollow"
+                element.setAttribute('data-follow-id', data.id)
+            });
+    }
+}
+
+function postComment(element) {
+    var pid = parseInt(element.getAttribute("data-commentbox-id"))
+    if (document.getElementById("commentbox" + pid).value) {
+        // post comment
+        const postData = {
+            "post_id": pid,
+            "text": document.getElementById("commentbox" + pid).value,
+        };
+        
+        fetch("/api/comments", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(postData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (document.getElementById("commentcount" + data.post_id)) {
+                    // already more than 1 comment
+                    document.getElementById("commentcount" + data.post_id).innerHTML = "View all " + (parseInt(document.getElementById("commentcount" + data.post_id).innerHTML.split(' ')[2]) + 1) + " comments"
+                    document.getElementById("firstcomment" + data.post_id).innerHTML = `<span id = "poster">${data.user.username}</span>${ data.text }`
+                } else {
+                    if (document.getElementById("firstcomment" + data.post_id)) {
+                        // 1 comment so add update first comment and add "View all X comments" label
+                        var newcommentcount = `<p class = "card-comment"><a href = "#" class = "card-comment-more" id = "${"commentcount" + data.post_id}">View all 2 comments</a></p>`
+                        document.getElementById("firstcomment" + data.post_id).innerHTML = `<span id = "poster">${data.user.username}</span>${ data.text }`
+                        document.getElementById("commentmarker" + data.post_id).insertAdjacentHTML('afterend', newcommentcount)
+                    } else {
+                        // only caption so add only first comment
+                        var newfirstcomment = `<p class = "card-comment" id = "${"firstcomment" + data.post_id}"><span id = "poster">${data.user.username}</span>${ data.text }</p>`
+                        document.getElementById("commentmarker" + data.post_id).insertAdjacentHTML('afterend', newfirstcomment)
+                    }
+
+                }
+                document.getElementById("commentbox" + pid).value = ""
+                document.getElementById("commentbox" + pid).focus();
+            });
+    } else {
+        // empty comment box
+        document.getElementById("commentbox" + pid).focus();
     }
 }
 // 
