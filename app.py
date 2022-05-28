@@ -53,15 +53,6 @@ initialize_routes(api)
 @app.route('/')
 # @decorators.jwt_or_login
 def home():
-    # access_token = request.cookies.get('access_token_cookie')
-    # csrf = request.cookies.get('csrf_access_token')
-    # return render_template(
-    #     'index.html', 
-    #     user=flask_jwt_extended.current_user,
-    #     access_token=access_token,
-    #     csrf=csrf,
-    # )
-
     try:
         # check if the access token is valid:
         flask_jwt_extended.verify_jwt_in_request()
