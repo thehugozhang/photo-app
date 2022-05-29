@@ -34,24 +34,30 @@ api = Api(app)
 
 # TODO: Deprecate old code for hard-coding the logged in user (User #12).
 with app.app_context():
-    app.current_user = User.query.filter_by(id=12).one()
+    app.current_user = flask_jwt_extended.current_user
 
 # TODO: replace the hard-coded user #12 code (above) with this code, which
 # figures out who is logged into the system based on the JWT.
-# @jwt.user_lookup_loader
-# def user_lookup_callback(_jwt_header, jwt_data):
-#     print('JWT data:', jwt_data)
-#     # https://flask-jwt-extended.readthedocs.io/en/stable/automatic_user_loading/
-#     user_id = jwt_data["sub"]
-#     print('user_id =', user_id)
-#     return User.query.filter_by(id=user_id).one_or_none()
+@jwt.user_lookup_loader
+def user_lookup_callback(_jwt_header, jwt_data):
+    print('JWT data:', jwt_data)
+    # https://flask-jwt-extended.readthedocs.io/en/stable/automatic_user_loading/
+    user_id = jwt_data["sub"]
+    print('user_id =', user_id)
+    return User.query.filter_by(id=user_id).one_or_none()
 
 # Initialize routes for all of your API endpoints:
 initialize_routes(api)
+from flask_jwt_extended import verify_jwt_in_request
 
+@app.before_request
+def before_request():
+    if request.endpoint != 'login':
+        verify_jwt_in_request()
+        
 # Server-side template for the homepage:
 @app.route('/')
-# @decorators.jwt_or_login
+@decorators.jwt_or_login
 def home():
     try:
         # check if the access token is valid:
@@ -66,7 +72,7 @@ def home():
 
 
 @app.route('/api/')
-#@decorators.jwt_or_login
+@decorators.jwt_or_login
 def api_docs():
     access_token = request.cookies.get('access_token_cookie')
     csrf = request.cookies.get('csrf_access_token')

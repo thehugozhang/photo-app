@@ -4,12 +4,13 @@
             <h2>Photo App</h2>
             <!-- <img src = "../static/img/logo.png"> -->
         </div>
-        {% if user %}
+       
         <div class = "nav-right">
-            
+            {% if user %}
             <p id = "username">{{ user.username }}</p>
+            {% endif %}
             <a href = "/logout">Sign Out</a>
         </div>
-        {% endif %}
+        
     </div>
 </div>

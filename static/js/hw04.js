@@ -1,3 +1,19 @@
+const getCookie = key => {
+    let name = key + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+};
+
 // 
 // BEGIN Page Initialization
 //
@@ -13,7 +29,13 @@ const story2Html = story => {
 };
 
 const displayStories = () => {
-    fetch('/api/stories')
+    fetch('/api/stories', {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
+        }
+    })
         .then(response => response.json())
         .then(stories => {
             const html = stories.map(story2Html).join('');
@@ -47,7 +69,13 @@ const suggestion2Html = suggestion => {
 }
 
 const displayUserProfile = () => {
-    fetch('/api/profile')
+    fetch('/api/profile', {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
+        }
+    })
         .then(response => response.json())
         .then(user => {
             const userHeader = user2Html(user)
@@ -56,7 +84,13 @@ const displayUserProfile = () => {
 }
 
 const displaySuggestions = () => {
-    fetch('/api/suggestions')
+    fetch('/api/suggestions', {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
+        }
+    })
         .then(response => response.json())
         .then(suggestions => {
             const suggestionHtml = suggestions.map(suggestion2Html).join('');
@@ -131,12 +165,18 @@ const post2Html = post => {
 }
 
 const displayCards = () => {
-    fetch('/api/posts/?limit=10')
-        .then(response => response.json())
-        .then(posts => {
-            const postHtml = posts.map(post2Html).join('');
-            document.querySelector('.cards').innerHTML = postHtml;
-        })
+    fetch('/api/posts/?limit=10', {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
+        }
+    })
+    .then(response => response.json())
+    .then(posts => {
+        const postHtml = posts.map(post2Html).join('');
+        document.querySelector('.cards').innerHTML = postHtml;
+    })
 }
 
 const initPage = () => {
@@ -162,6 +202,7 @@ function likeUnlike(element) {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': getCookie('csrf_access_token')
             }
         })
         .then(response => response.json())
@@ -182,6 +223,7 @@ function likeUnlike(element) {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': getCookie('csrf_access_token')
             },
             body: JSON.stringify(postData)
         })
@@ -206,6 +248,7 @@ function bookmarkUnbookmark(element) {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': getCookie('csrf_access_token')
             }
         })
         .then(response => response.json())
@@ -226,6 +269,7 @@ function bookmarkUnbookmark(element) {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': getCookie('csrf_access_token')
             },
             body: JSON.stringify(postData)
         })
@@ -244,10 +288,11 @@ function followUnfollow(element) {
     if (element.getAttribute("data-follow-id")) {
         // follow to unfollow
         var fid = parseInt(element.getAttribute("data-follow-id"))
-        fetch("http://localhost:5000/api/following/" + fid, {
+        fetch("/api/following/" + fid, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
         }
         })
         .then(response => response.json())
@@ -268,6 +313,7 @@ function followUnfollow(element) {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': getCookie('csrf_access_token')
                 },
                 body: JSON.stringify(postData)
             })
@@ -293,6 +339,7 @@ function postComment(element) {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': getCookie('csrf_access_token')
                 },
                 body: JSON.stringify(postData)
             })
@@ -351,6 +398,7 @@ function openModal(element) {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
         }
     })
     .then(response => response.json())
